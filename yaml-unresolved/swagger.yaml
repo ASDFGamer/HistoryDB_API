@@ -1,0 +1,1771 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ASDFGamer/HistoryDB_API/0.9.0
+info:
+  description: >
+    This is an API which provides infos about historical events
+    It provides info about events, countries, settlements and persons and also relations between different objects.
+    In next versions it should also add art as an element.
+  version: "0.9.0"
+  title: HistoryDB API
+  contact:
+    email: historyDB@christoph-wildhagen.de
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /type/events:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Language'
+      description: Returns all event types
+      operationId: operations.types.list_event_types
+      responses:
+        '200':
+          description: A list of event types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventType'
+  /type/event:
+    post:
+      security:
+        - bearerAuth: []
+      summary: adds an eventtype
+      operationId: operations.types.add_event_type
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '409':
+          $ref: '#/components/responses/409Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventType'
+        description: Event type to add
+  /type/event/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Language'
+      description: Returns an specific event type
+      operationId: operations.types.get_event_type
+      responses:
+        '200':
+          $ref: '#/components/responses/EventType'
+        '404':
+          description: The event type doesn' t exist
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Updates an specific event type
+      operationId: operations.types.update_event_type
+      responses:
+        '200':
+          $ref: '#/components/responses/EventType'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          description: The event type doesn' t exist
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Deletes an specific event type
+      operationId: operations.types.delete_event_type
+      responses:
+        '200':
+          description: The event type was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          description: The event type doesn' t exist
+  /type/relations:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Language'
+      description: Returns all relation types
+      operationId: operations.types.list_relation_types
+      responses:
+        '200':
+          description: A list of relation types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelationType'
+  /type/relation:
+    post:
+      security:
+        - bearerAuth: []
+      summary: adds an relationtype
+      operationId: operations.types.add_relation_type
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '409':
+          $ref: '#/components/responses/409Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventType'
+        description: Relation type to add
+  /type/relation/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Language'
+      description: Returns an specific relation type
+      operationId: operations.types.get_relation_type
+      responses:
+        '200':
+          $ref: '#/components/responses/EventType'
+        '404':
+          description: The relation type doesn' t exist
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Updates an specific event type
+      operationId: operations.types.update_relation_type
+      responses:
+        '200':
+          $ref: '#/components/responses/EventType'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          description: The event type doesn' t exist
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Deletes an specific relation type
+      operationId: operations.types.delete_relation_type
+      responses:
+        '200':
+          description: The relation type was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          description: The relation type doesn' t exist
+  /countries:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Year'
+        - $ref: '#/components/parameters/Population'
+        - $ref: '#/components/parameters/Language'
+      description: Returns an List of all Countries
+      operationId: operations.country.list_countries
+      responses:
+        '200':
+          description: A List of countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+  /country:
+    post:
+      security:
+        - bearerAuth: []
+      description: Creates an new Country
+      operationId: operations.country.create_country
+      requestBody:
+        $ref: '#/components/requestBodies/Country'
+      responses:
+        '200':
+          $ref: '#/components/responses/Country'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Language'
+      description: Returns an specific country
+      operationId: operations.country.get_country
+      responses:
+        '200':
+          $ref: '#/components/responses/Country'
+        '404':
+          description: The country doesn' t exist
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Updates an specific country
+      operationId: operations.country.update_country
+      responses:
+        '200':
+          $ref: '#/components/responses/Country'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          description: The country doesn' t exist
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Deletes an specific country
+      operationId: operations.country.delete_country
+      responses:
+        '200':
+          description: The country was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          description: The country doesn' t exist
+  /country/{id}/border/{year}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/YearPath'
+        - $ref: '#/components/parameters/ID'
+      operationId: operations.country.get_border
+      responses:
+        '200':
+          $ref: '#/components/responses/Border'
+        '404':
+          $ref: '#/components/responses/404Error'
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/YearPath'
+        - $ref: '#/components/parameters/ID'
+      description: Updates the info about the country border for that year
+      operationId: operations.country.update_border
+      responses:
+        '200':
+          $ref: '#/components/responses/Border'
+        '401':
+          $ref: '#/components/responses/401Error'
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/YearPath'
+        - $ref: '#/components/parameters/ID'
+      description: Deletes the info about border of the country
+      operationId: operations.country.delete_border
+      responses:
+        '200':
+          description: The Info was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/borders:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Year'
+      description: A List of all known Borders for the country
+      operationId: operations.country.list_borders
+      responses:
+        '200':
+          description: A List of borders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Border'
+  /country/{id}/border:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Creates a new border
+      operationId: operations.country.create_border
+      requestBody:
+        $ref: '#/components/requestBodies/Border'
+      responses:
+        '200':
+          $ref: '#/components/responses/Border'
+  /country/{id}/countries:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all countrys that are related to the country
+      operationId: operations.country.list_country_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/CountryRelationList'
+  /country/{id}/country:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing country to this country
+      operationId: operations.country.create_country_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/country/{country_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      operationId: operations.country.delete_country_relation
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: country_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the country and the country
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/events:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all events that are related to the country
+      operationId: operations.country.list_event_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/EventRelationList'
+  /country/{id}/event:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing event to this country
+      operationId: operations.country.create_event_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/event/{event_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the country and the event
+      operationId: operations.country.delete_event_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/persons:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all country that are related to the person
+      operationId: operations.country.list_person_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/PersonRelationList'
+  /country/{id}/person:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing person to this country
+      operationId: operations.country.create_person_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/person/{person_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: person_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the country and the person
+      operationId: operations.country.delete_person_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/settlements:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all settlements that are related to the country
+      operationId: operations.country.list_settlement_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/SettlementRelationList'
+  /country/{id}/settlement:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing settlement to this country
+      operationId: operations.country.create_settlement_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /country/{id}/settlement/{settlement_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: settlement_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the country and the settlement
+      operationId: operations.country.delete_settlement_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /events:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Year'
+        - $ref: '#/components/parameters/Month'
+        - $ref: '#/components/parameters/Day'
+        - $ref: '#/components/parameters/Language'
+      description: Returns an list of all events
+      operationId: operations.event.list_events
+      responses:
+        '200':
+          description: A List of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+  /event:
+    post:
+      security:
+        - bearerAuth: []
+      description: Creates an new event
+      operationId: operations.event.create_event
+      requestBody:
+        $ref: '#/components/requestBodies/Event'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Language'
+      description: Returns an specific event
+      operationId: operations.event.get_event
+      responses:
+        '200':
+          $ref: '#/components/responses/Event'
+        '404':
+          $ref: '#/components/responses/404Error'
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Updates an specific event
+      operationId: operations.event.update_event
+      responses:
+        '200':
+          $ref: '#/components/responses/Event'
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          $ref: '#/components/responses/404Error'
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Deletes an specific event
+      operationId: operations.event.delete_event
+      responses:
+        '200':
+          description: The Event was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+        '404':
+          $ref: '#/components/responses/404Error'
+  /event/{id}/countries:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all countrys that are related to the event
+      operationId: operations.event.list_country_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/CountryRelationList'
+  /event/{id}/country:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing country to this event
+      operationId: operations.event.create_country_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/country/{country_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: country_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the event and the country
+      operationId: operations.event.delete_country_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/events:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all events that are related to the event
+      operationId: operations.event.list_event_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/EventRelationList'
+  /event/{id}/event:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing event to this event
+      operationId: operations.event.create_event_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/event/{event_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the event and the event
+      operationId: operations.event.delete_event_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/persons:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all event that are related to the person
+      operationId: operations.event.list_person_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/PersonRelationList'
+  /event/{id}/person:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing person to this event
+      operationId: operations.event.create_person_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/person/{person_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: person_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the event and the person
+      operationId: operations.event.delete_person_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/settlements:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all settlements that are related to the event
+      operationId: operations.event.list_settlement_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/SettlementRelationList'
+  /event/{id}/settlement:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing settlement to this event
+      operationId: operations.event.create_settlement_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /event/{id}/settlement/{settlement_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: settlement_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the event and the settlement
+      operationId: operations.event.delete_settlement_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /persons:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Year'
+      description: Returns a list of all Persons
+      operationId: operations.person.list_persons
+      responses:
+        '200':
+          description: The Info was updated
+  /person:
+    post:
+      security:
+        - bearerAuth: []
+      description: Creates a new Person
+      operationId: operations.person.create_person
+      requestBody:
+        $ref: '#/components/requestBodies/Person'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Returns the person with that id
+      operationId: operations.person.get_person
+      responses:
+        '200':
+          $ref: '#/components/responses/Person'
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Updates the Info for an Person
+      operationId: operations.person.update_person
+      responses:
+        '200':
+          description: The Person is updated
+        '401':
+          $ref: '#/components/responses/401Error'
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Deletes the Info for an Person
+      operationId: operations.person.delete_person
+      responses:
+        '200':
+          description: The info about the person is deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/countries:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all countrys that are related to the person
+      operationId: operations.person.list_country_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/CountryRelationList'
+  /person/{id}/country:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing country to this person
+      operationId: operations.person.create_country_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/country/{country_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: country_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the person and the country
+      operationId: operations.person.delete_country_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/events:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all events that are related to the person
+      operationId: operations.person.list_event_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/EventRelationList'
+  /person/{id}/event:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing event to this person
+      operationId: operations.person.create_event_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/event/{event_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the person and the event
+      operationId: operations.person.delete_event_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/persons:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all persons that are related to the person
+      operationId: operations.person.list_person_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/PersonRelationList'
+  /person/{id}/person:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing person to this person
+      operationId: operations.person.create_person_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/person/{person_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: person_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the person and the person
+      operationId: operations.person.delete_person_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/settlements:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all settlements that are related to the person
+      operationId: operations.person.list_settlement_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/SettlementRelationList'
+  /person/{id}/settlement:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing settlement to this person
+      operationId: operations.person.create_settlement_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /person/{id}/settlement/{settlement_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: settlement_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the person and the settlement
+      operationId: operations.person.delete_settlement_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlements:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Year'
+        - $ref: '#/components/parameters/Population'
+        - $ref: '#/components/parameters/Language'
+      description: Returns a list with all settlements
+      operationId: operations.settlement.list_settlements
+      responses:
+        '200':
+          description: A list of settlements
+  /settlement:
+    post:
+      security:
+        - bearerAuth: []
+      description: Creates a new settlement
+      operationId: operations.settlement.create_settlement
+      responses:
+        '200':
+          description: The settlement was created
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Language'
+      description: Returns the settlement with that id
+      operationId: operations.settlement.get_settlement
+      responses:
+        '200':
+          description: Returns the settlement with that id
+    put:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Updates the Info for an Settlement
+      operationId: operations.settlement.update_settlement
+      responses:
+        '200':
+          description: The info for the settlement is updated
+        '401':
+          $ref: '#/components/responses/401Error'
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Deletes the Info for an settlement
+      operationId: operations.settlement.delete_settlement
+      responses:
+        '200':
+          description: The info about the settlement is deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/countries:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all countrys that are related to the settlement
+      operationId: operations.settlement.list_country_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/CountryRelationList'
+  /settlement/{id}/country:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing country to this settlement
+      operationId: operations.settlement.create_country_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/country/{country_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: country_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the settlement and the country
+      operationId: operations.settlement.delete_country_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/events:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all events that are related to the settlement
+      operationId: operations.settlement.list_event_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/EventRelationList'
+  /settlement/{id}/event:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing event to this settlement
+      operationId: operations.settlement.create_event_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/event/{event_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the settlement and the event
+      operationId: operations.settlement.delete_event_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/persons:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+      description: A List with all persons that are related to the settlement
+      operationId: operations.settlement.list_person_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/PersonRelationList'
+  /settlement/{id}/person:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing person to this settlement
+      operationId: operations.settlement.create_person_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/person/{person_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: person_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the settlement and the person
+      operationId: operations.settlement.delete_person_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/settlements:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/RelationType'
+        - $ref: '#/components/parameters/Language'
+      description: A List with all settlements that are related to the settlement
+      operationId: operations.settlement.list_settlement_relations
+      responses:
+        '200':
+          $ref: '#/components/responses/SettlementRelationList'
+  /settlement/{id}/settlement:
+    post:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+      description: Link an existing settlement to this settlement
+      operationId: operations.settlement.create_settlement_relation
+      requestBody:
+        $ref: '#/components/requestBodies/RelationLink'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/401Error'
+  /settlement/{id}/settlement/{settlement_id}:
+    delete:
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ID'
+        - name: settlement_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      description: Deletes the Link between the settlement and the settlement
+      operationId: operations.settlement.delete_settlement_relation
+      responses:
+        '200':
+          description: The link was deleted
+        '401':
+          $ref: '#/components/responses/401Error'
+components:
+  schemas:
+    Language:
+      type: string
+      example: EN_gb
+    Source:
+      oneOf:
+        - type: object
+          properties:
+            booktitle:
+              type: string
+            author:
+              type: string
+            page:
+              type: integer
+            isbn:
+              type: string
+        - type: object
+          properties:
+            weblink:
+              type: string
+            date:
+              type: string
+              format: date
+            author:
+              type: string
+        - type: array
+          items:
+            $ref: '#/components/schemas/Source'
+
+    HistoricDate:
+      type: object
+      required:
+        - year
+      properties:
+        year:
+          type: integer
+          example: 1794
+        month:
+          type: integer
+          maximum: 12
+          minimum: 1
+        day:
+          type: integer
+          minimum: 1
+          maximum: 31
+        inaccuracy_year:
+          type: integer
+          minimum: 0
+        inaccuracy_month:
+          type: integer
+          maximum: 6
+          minimum: 0
+        inaccuracy_day:
+          type: integer
+          maximum: 16
+          minimum: 0
+    TimeFrame:
+      type: object
+      required:
+        - start
+      properties:
+        start:
+          $ref: '#/components/schemas/HistoricDate'
+        end:
+          $ref: '#/components/schemas/HistoricDate'
+    GenericDefaultLanguage:
+      type: object
+      required:
+        - default_language
+        - default_name
+      properties:
+        default_language:
+          $ref: '#/components/schemas/Language'
+        default_name:
+          type: string
+          example: War
+        translations:
+            type: array
+            items:
+              type: object
+              properties:
+                language:
+                  $ref: '#/components/schemas/Language'
+                name:
+                  type: string
+
+    GeoPoint:
+      type: object
+      required:
+        - longitude
+        - langitude
+      properties:
+        id:
+          type: integer
+        longitude:
+          type: number
+        langitude:
+          type: number
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+    Title:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+
+    EventType:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+        id:
+          type: integer
+    RelationType:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+        id:
+          type: integer
+    Event:
+      type: object
+      properties:
+        eventtype:
+          type: integer
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+        time:
+          $ref: '#/components/schemas/TimeFrame'#
+        source:
+          $ref: '#/components/schemas/Source'
+    Border:
+      type: object
+      required:
+        - positions
+      properties:
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeoPoint'
+        duration:
+          $ref: '#/components/schemas/TimeFrame'
+        source:
+          $ref: '#/components/schemas/Source'
+    Country:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+        existing:
+          $ref: '#/components/schemas/TimeFrame'
+        source:
+          $ref: '#/components/schemas/Source'
+    Settlement:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+        existing:
+          $ref: '#/components/schemas/TimeFrame'
+        location:
+          $ref: '#/components/schemas/GeoPoint'
+        source:
+          $ref: '#/components/schemas/Source'
+    Person:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Title'
+        name:
+          $ref: '#/components/schemas/GenericDefaultLanguage'
+        lifetime:
+          $ref: '#/components/schemas/TimeFrame'
+        source:
+          $ref: '#/components/schemas/Source'
+
+    EventRelation:
+      type: object
+      properties:
+        type:
+          type: integer
+        event:
+          type: integer
+    CountryRelation:
+      type: object
+      properties:
+        type:
+          type: integer
+        event:
+          type: integer
+    SettlementRelation:
+      type: object
+      properties:
+        type:
+          type: integer
+        event:
+          type: integer
+    PersonRelation:
+      type: object
+      properties:
+        type:
+          type: integer
+        event:
+          type: integer
+  parameters:
+    PageLimit:
+      name: limit
+      in: query
+      description: Limits the number of items on a page
+      schema:
+        type: integer
+    PageOffset:
+      name: offset
+      in: query
+      description: Specifies the page number of the artists to be displayed
+      schema:
+        type: integer
+    Settlement:
+      name: settlement
+      in: query
+      description: Specifies the Settlement that all Results should relate to
+      schema:
+        type: integer
+        format: int64
+    Country:
+      name: country
+      in: query
+      description: Specifies the Country that all Results should relate to
+      schema:
+        type: integer
+        format: int64
+    Person:
+      name: person
+      in: query
+      description: Specifies the Person that all Results should relate to
+      schema:
+        type: integer
+        format: int64
+    EventType:
+      name: type
+      in: query
+      description: Specifies the type of event
+      schema:
+        type: integer
+        format: int64
+    RelationType:
+      name: type
+      in: query
+      description: Specifies the relation to the event
+      schema:
+        type: integer
+        format: int64
+    Year:
+      name: year
+      in: query
+      description: Specifies the year of the results
+      schema:
+        type: integer
+        example: 1794
+    YearPath:
+      name: year
+      in: path
+      required: true
+      description: Specifies the year of the results
+      schema:
+        type: integer
+        example: 1794
+    Month:
+      name: month
+      in: query
+      description: Specifies the month of the event
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 12
+        example: 11
+    Day:
+      name: day
+      in: query
+      description: Specufies the day of the month of the event
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 31
+        example: 20
+    Population:
+      name: population
+      in: query
+      description: Specifies the minimal polulation
+      schema:
+        type: integer
+        minimum: 1
+        example: 20000
+    ID:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    Language:
+      name: accept-language
+      in: header
+      description: Specifies the language of the result
+      schema:
+        type: string
+        example: "en_US"
+  requestBodies:
+    Country:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Country'
+            
+    Event:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Event'
+    Border:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Border'
+    Person:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Person'
+    RelationLink:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              targetID:
+                type: number
+              typeID:
+                type: number
+  responses:
+    Event:
+      description: Returns the event
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Event'
+      links:
+        GetEventTypeById:   # <---- arbitrary name for the link
+          operationId: getEventType
+          parameters:
+            id: '$response.body#/eventtype'
+          description: >
+            The `eventtype` value returned in the response can be used as
+            the `id` parameter in `GET /type/event/{id}`.
+    EventRelationList:
+      description: Returns a List of event relations
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/EventRelation'
+      links:
+        GetEventById:   # <---- arbitrary name for the link
+          operationId: getEvent
+          parameters:
+            id: '$response.body#/0/event'
+          description: >
+            The `event` value returned in the response can be used as
+            the `id` parameter in `GET /event/{id}`.
+        GetRelationByID:
+          $ref: '#/components/links/GetRelationByID'
+    Border:
+      description: Returns a border
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Border'
+    Country:
+      description: Returns a country
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Country'
+    CountryRelationList:
+      description: Returns a List of country relations
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CountryRelation'
+      links:
+        GetCountryById:   # <---- arbitrary name for the link
+          operationId: getCountry
+          parameters:
+            id: '$response.body#/0/country'
+          description: >
+            The `country` value returned in the response can be used as
+            the `id` parameter in `GET /country/{id}`.
+        GetRelationByID:
+          $ref: '#/components/links/GetRelationByID'
+    Settlement:
+      description: Returns a settlement
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Settlement'
+    SettlementRelationList:
+      description: Returns a List of settlement relations
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SettlementRelation'
+      links:
+        GetSettlementById:
+          operationId: getSettlement
+          parameters:
+            id: '$response.body#/0/settlement'
+          description: >
+            The `settlement` value returned in the response can be used as
+            the `id` parameter in `GET /settlement/{id}`.
+        GetRelationByID:
+          $ref: '#/components/links/GetRelationByID'
+    Person:
+      description: Returns a person
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Person'
+    PersonRelationList:
+      description: Returns a List of person relations
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/PersonRelation'
+      links:
+        GetPersonById:
+          operationId: getPerson
+          parameters:
+            id: '$response.body#/0/person'
+          description: >
+            The `person` value returned in the response can be used as
+            the `id` parameter in `GET /person/{id}`.
+        GetRelationByID:
+          $ref: '#/components/links/GetRelationByID'
+    EventType:
+      description: Returns a event type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EventType'
+    RelationType:
+      description: Returns a relation type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RelationType'
+    Created:
+      description: The element was created
+      headers:
+        location:
+          schema:
+            type: string
+          description: Location of the new element
+    401Error:
+      description: Not authentified
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Not authentified
+    404Error:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Can' t find ressource
+    409Error:
+      description: Alredy created
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: The Object is already created
+  links:
+    GetRelationByID:
+      operationId: getRelationType
+      parameters:
+        id: '$response.body#/0/type'
+      description: >
+        The `type` value returned in the response can be used as
+        the `id` parameter in `GET type/relation/{id}`.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: app.decode_token
